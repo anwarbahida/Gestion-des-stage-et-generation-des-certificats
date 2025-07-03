@@ -1,0 +1,36 @@
+﻿@model appWeb.Models.Encadrant
+@{
+    ViewData["Title"] = "Supprimer l'encadrant";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/site-delete.css" />
+}
+
+<h1 class="delete-title">Supprimer l'encadrant</h1>
+<h3 class="delete-subtitle">Êtes-vous sûr de vouloir supprimer cet encadrant ?</h3>
+
+<div class="delete-card">
+    <h4 class="section-title">Encadrant</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Nom</dt>
+        <dd class="col-sm-10">@Model.Nom</dd>
+
+        <dt class="col-sm-2">Prénom</dt>
+        <dd class="col-sm-10">@Model.Prenom</dd>
+
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+
+        <dt class="col-sm-2">Téléphone</dt>
+        <dd class="col-sm-10">@Model.Telephone</dd>
+
+        <dt class="col-sm-2">Formation</dt>
+        <dd class="col-sm-10">@Model.Formation?.Titre</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete" method="post" class="mt-3">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Supprimer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

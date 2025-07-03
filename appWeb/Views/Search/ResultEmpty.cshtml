@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Aucun Résultat";
+    Layout = "_Layout";
+}
+
+<style>
+    .no-result-container {
+        max-width: 700px;
+        margin: 4rem auto;
+        text-align: center;
+        padding: 2rem;
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+        .no-result-container h4 {
+            font-size: 1.5rem;
+            color: #856404;
+        }
+
+        .no-result-container p {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #6c757d;
+        }
+
+        .no-result-container hr {
+            margin: 1.5rem 0;
+        }
+
+        .no-result-container a.btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+        }
+
+    @@media (max-width: 576px) {
+        .no-result-container
+
+    {
+        padding: 1.5rem 1rem;
+    }
+
+    .no-result-container h4 {
+        font-size: 1.25rem;
+    }
+
+    .no-result-container p {
+        font-size: 1rem;
+    }
+
+    }
+</style>
+
+<div class="no-result-container">
+    <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i> Aucun résultat trouvé</h4>
+    <p>
+        @ViewBag.Message ?? "Aucune donnée ne correspond à votre recherche."
+    </p>
+    <hr>
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary">
+        <i class="fas fa-home"></i> Retour à l'accueil
+    </a>
+</div>

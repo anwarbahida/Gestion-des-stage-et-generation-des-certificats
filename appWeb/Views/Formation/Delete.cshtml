@@ -1,0 +1,24 @@
+﻿@model appWeb.Models.Formation
+@{
+    ViewData["Title"] = "Supprimer la formation";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/site-delete.css" />
+}
+
+
+<h1 class="delete-title">Supprimer la formation</h1>
+<h3 class="delete-subtitle">Êtes-vous sûr de vouloir supprimer cette formation ?</h3>
+
+<div class="delete-card">
+    <h4 class="section-title">@Model.Titre</h4>
+    <p>@Model.Description</p>
+    <p><strong>Date début :</strong> @Model.DateDebut.ToShortDateString()</p>
+    <p><strong>Date fin :</strong> @Model.DateFin.ToShortDateString()</p>
+</div>
+
+<form asp-action="Delete" method="post" class="mt-3">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Supprimer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

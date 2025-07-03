@@ -1,0 +1,445 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Génération des Certificats</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    @RenderSection("Styles", required: false)
+    <style>
+        
+
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-bg);
+            color: white;
+            flex-shrink: 0;
+        }
+
+            .sidebar a {
+                color: white;
+                display: block;
+                padding: 15px;
+                text-decoration: none;
+            }
+
+                .sidebar a:hover {
+                    background-color: var(--sidebar-link-hover);
+                }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: var(--header-bg);
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-color);
+        }
+
+        .search-bar {
+            width: 300px;
+        }
+
+        main {
+            padding: 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            padding: 10px 20px;
+            border-top: 1px solid #ccc;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .fixed-pagination {
+            max-width: 960px;
+            margin: 3rem;
+            margin-left: 24rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        nav[aria-label="Pagination"] {
+            min-height: 50px; /* pour garder l'espace réservé même sans pagination */
+        }
+
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #212529;
+            --header-bg: #f8f9fa;
+            --footer-bg: #e9ecef;
+            --sidebar-bg: #343a40;
+            --sidebar-hover: #495057;
+            --sidebar-width: 250px;
+            --transition-speed: 0.3s;
+        }
+
+        body.dark-mode {
+            --bg-color: #1e1e1e;
+            --text-color: #f8f9fa;
+            --header-bg: #2c2c2c;
+            --footer-bg: #2c2c2c;
+            --sidebar-bg: #111;
+            --sidebar-hover: #222;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Segoe UI", sans-serif;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            min-height: 100vh;
+            background-color: var(--sidebar-bg);
+            color: white;
+            transition: transform var(--transition-speed) ease-in-out;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+            .sidebar a {
+                display: block;
+                color: white;
+                padding: 15px 20px;
+                text-decoration: none;
+                transition: background-color 0.2s;
+            }
+
+                .sidebar a:hover {
+                    background-color: var(--sidebar-hover);
+                }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+            transition: margin-left var(--transition-speed) ease-in-out;
+        }
+
+        .header {
+            background-color: var(--header-bg);
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid #ccc;
+        }
+
+        /* Pagination fix if needed */
+        .fixed-pagination {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--header-bg);
+            padding: 10px 20px;
+            border-top: 1px solid #dee2e6;
+            z-index: 1030;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Responsive Design */
+        @@media (max-width: 992px) {
+            .sidebar
+
+        {
+            transform: translateX(-100%);
+            position: absolute;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        .toggle-sidebar-btn {
+            display: inline-block;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        }
+
+        @@media (max-width: 576px) {
+            .header h4
+
+        {
+            font-size: 1.2rem;
+        }
+
+        .search-bar {
+            flex-direction: column;
+            width: 100%;
+        }
+
+            .search-bar input,
+            .search-bar select,
+            .search-bar button {
+                width: 100%;
+            }
+
+        }
+
+        /* Style Details.cshtml*/
+
+        /* --- Carte de détails générale --- */
+        .details-card {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+            .details-card:hover {
+                box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            }
+
+        /* --- Titre de la carte --- */
+        .details-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+
+        /* --- Libellés des champs (à gauche) --- */
+        .details-label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        /* --- Valeurs des champs (à droite) --- */
+        .details-value {
+            color: #212529;
+        }
+
+        /* --- Boutons d'action --- */
+        .btn {
+            margin-right: 0.5rem;
+        }
+
+        @@media (max-width: 576px) {
+            .details-card
+
+        {
+            padding: 1.5rem;
+        }
+
+        .details-title {
+            font-size: 1.25rem;
+        }
+
+        dt.col-sm-3, dt.col-sm-2 {
+            text-align: left !important;
+            margin-bottom: 0.3rem;
+        }
+
+        dd.col-sm-9, dd.col-sm-10 {
+            margin-bottom: 1rem;
+        }
+
+        }
+
+        h4 {
+            position: relative;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+            h4::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 5px;
+                height: 60%;
+                background: linear-gradient(180deg, #4caf50, #2e7d32);
+                border-radius: 3px;
+            }
+
+
+    </style>
+</head>
+<body>
+    
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="p-3">
+            <div>
+                <img src="~/images/logo.jpg" alt="Logo" style="width: 180px;" />
+            </div>
+            <a asp-controller="Dashboard" asp-action="Index"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
+            <a asp-controller="Stagiaire" asp-action="Index"><i class="fas fa-users"></i> Stagiaires</a>
+            <a asp-controller="Formation" asp-action="Index"><i class="fas fa-chalkboard-teacher"></i> Formations</a>
+            <a asp-controller="Encadrant" asp-action="Index"><i class="fas fa-user-tie"></i> Encadrants</a>
+            <a asp-controller="Certificat" asp-action="Index"><i class="fas fa-certificate"></i> Certificats</a>
+            <a asp-controller="Certificat" asp-action="Generer"><i class="fas fa-file-pdf"></i> Génération Certificat</a>
+            <a asp-controller="Admin" asp-action="Profil"><i class="fas fa-user"></i> Mon Profil</a>
+            <a asp-area="Identity" asp-page="/Account/Logout"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+               class="d-block text-white px-3 py-2"
+               style="cursor: pointer;">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+            <form id="logout-form" method="post" asp-area="Identity" asp-page="/Account/Logout" class="d-none"></form>
+
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <button class="toggle-sidebar-btn text-dark" onclick="document.querySelector('.sidebar').classList.toggle('active')">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h4 class="mb-0">Génération des Certificats</h4>
+            <form method="get" asp-controller="Search" asp-action="Index" class="d-flex gap-2 mb-3">
+                <select name="type" class="form-select w-auto">
+                    <option value="stagiaire">Stagiaire</option>
+                    <option value="formation">Formation</option>
+                    <option value="encadrant">Encadrant</option>
+                    <option value="certificat">Certificat</option>
+                </select>
+                <input type="search" name="query" class="form-control" placeholder="Rechercher..." />
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </form>
+            @inject Microsoft.AspNetCore.Identity.UserManager<appWeb.Models.Admin> UserManager
+            @inject Microsoft.AspNetCore.Identity.SignInManager<appWeb.Models.Admin> SignInManager
+
+            @{
+                string adminName = "Admin";
+                if (SignInManager.IsSignedIn(User))
+                {
+                    var user = await UserManager.GetUserAsync(User);
+                    if (user != null)
+                    {
+                        var nom = string.IsNullOrEmpty(user.Nom) ? "" : user.Nom;
+                        var prenom = string.IsNullOrEmpty(user.Prenom) ? "" : user.Prenom;
+                        adminName = (nom + " " + prenom).Trim();
+                        if (string.IsNullOrEmpty(adminName))
+                        {
+                            adminName = "Admin";
+                        }
+                    }
+                }
+            }
+            <div class="dropdown">
+                <a class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user-circle fa-2x text-secondary me-2"></i>
+                    <strong>@adminName</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Profil">Profil</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" href="~/Identity/Account/Logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
+                        <form id="logout-form" method="post" asp-area="Identity" asp-page="/Account/Logout" class="d-none"></form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- Body -->
+        <main role="main">
+            @RenderBody()
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            &copy; 2025 - Génération des Certificats <i>By : Anwar Bahida</i>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+</body>
+</html>

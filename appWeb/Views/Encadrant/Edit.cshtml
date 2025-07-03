@@ -1,0 +1,56 @@
+﻿@model appWeb.Models.Encadrant
+
+@{
+    ViewData["Title"] = "Modifier l'encadrant";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/site-Edit.css" />
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" method="post" class="form-edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Nom" class="control-label"></label>
+        <input asp-for="Nom" class="form-control" />
+        <span asp-validation-for="Nom" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Prenom" class="control-label"></label>
+        <input asp-for="Prenom" class="form-control" />
+        <span asp-validation-for="Prenom" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Telephone" class="control-label"></label>
+        <input asp-for="Telephone" class="form-control" />
+        <span asp-validation-for="Telephone" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FormationId" class="control-label">Formation</label>
+        <select asp-for="FormationId" class="form-control" asp-items="ViewBag.Formations">
+            <option value="">-- Sélectionner une formation --</option>
+        </select>
+        <span asp-validation-for="FormationId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

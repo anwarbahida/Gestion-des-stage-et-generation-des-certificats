@@ -1,0 +1,74 @@
+﻿@model IEnumerable<appWeb.Models.Certificat>
+
+@{
+    ViewData["Title"] = "Profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    @@media (max-width: 768px) {
+        .list-group-item {
+            font-size: 1rem;
+        }
+
+        .btn {
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        img.rounded-circle {
+            width: 140px !important;
+            height: 140px !important;
+        }
+
+        .d-flex.flex-wrap {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+        <div class="row align-items-center g-4">
+            <div class="col-md-4 text-center">
+                <img src="@ViewBag.PhotoPath"
+                     class="img-fluid rounded-circle border border-3 border-primary shadow-sm"
+                     style="width: 180px; height: 180px; object-fit: cover;"
+                     onerror="this.src='/images/admin.jpg'"
+                     alt="Photo de profil" />
+
+                @* Affichage du logo de l’entreprise s’il existe *@
+                @if (!string.IsNullOrEmpty(ViewBag.LogoPath))
+                {
+                    <div class="mt-3">
+                        <img src="@ViewBag.LogoPath"
+                             class="img-fluid shadow-sm border border-secondary rounded-3"
+                             style="max-width: 200px; height: auto;"
+                             alt="Logo de l’entreprise" />
+                        <div class="text-muted mt-1">Logo de l’entreprise</div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-8">
+                <h3 class="text-primary mb-3"><i class="fas fa-user me-2"></i>Informations de l’administrateur</h3>
+                <ul class="list-group list-group-flush fs-5">
+                    <li class="list-group-item"><strong>Nom :</strong> @ViewBag.Nom</li>
+                    <li class="list-group-item"><strong>Prénom :</strong> @ViewBag.Prenom</li>
+                    <li class="list-group-item"><strong>Email :</strong> @ViewBag.Email</li>
+                    <li class="list-group-item"><strong>Téléphone :</strong> @ViewBag.Phone</li>
+                    <li class="list-group-item"><strong>Entreprise :</strong> @ViewBag.Entreprise</li>
+                    <li class="list-group-item"><strong>Ville :</strong> @ViewBag.Ville</li>
+                </ul>
+                <div class="mt-4 d-flex flex-wrap gap-2">
+                    <a asp-action="EditProfil" class="btn btn-success px-4 py-2">
+                        <i class="fas fa-edit me-1"></i> Modifier mon profil
+                    </a>
+                    <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="btn btn-outline-warning px-4 py-2">
+                        <i class="fas fa-key me-1"></i> Changer le mot de passe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

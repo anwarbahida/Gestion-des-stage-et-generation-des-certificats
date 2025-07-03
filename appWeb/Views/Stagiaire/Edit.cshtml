@@ -1,0 +1,48 @@
+﻿@model appWeb.Models.Stagiaire
+
+@{
+    ViewData["Title"] = "Modifier un stagiaire";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/site-Edit.css" />
+}
+
+<center><h2>@ViewData["Title"]</h2></center>
+
+<form asp-action="Edit" method="post" class="form-edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Nom" class="control-label"></label>
+        <input asp-for="Nom" class="form-control" />
+        <span asp-validation-for="Nom" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Prenom" class="control-label"></label>
+        <input asp-for="Prenom" class="form-control" />
+        <span asp-validation-for="Prenom" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DateNaissance" class="control-label"></label>
+        <input asp-for="DateNaissance" class="form-control" type="date" />
+        <span asp-validation-for="DateNaissance" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    <a asp-action="Index" class="btn btn-secondary">Retour</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

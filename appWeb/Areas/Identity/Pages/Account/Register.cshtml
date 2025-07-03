@@ -1,0 +1,148 @@
+﻿@page
+@model RegisterModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* Base et reset */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .register-container {
+            background-color: #fff;
+            border-radius: 1rem;
+            padding: 3rem;
+            max-width: 430px;
+            width: 100%;
+            box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.25);
+        }
+
+            .register-container h2 {
+                text-align: center;
+                margin-bottom: 1.5rem;
+                color: #333;
+            }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-icon-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+            .input-icon-group i {
+                position: absolute;
+                top: 50%;
+                left: 1rem;
+                transform: translateY(-50%);
+                color: #666;
+            }
+
+            .input-icon-group input {
+                width: 100%;
+                padding: 1rem 1rem 1rem 3rem;
+                border: 1.5px solid #ccc;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                transition: border 0.3s, box-shadow 0.3s;
+            }
+
+                .input-icon-group input:focus {
+                    border-color: #2575fc;
+                    box-shadow: 0 0 0 0.2rem rgba(37, 117, 252, 0.4);
+                    outline: none;
+                }
+
+            .input-icon-group label {
+                display: block;
+                margin-bottom: 0.25rem;
+                font-weight: 600;
+                color: #444;
+            }
+
+        .text-danger {
+            font-size: 0.875rem;
+            margin-top: -1rem;
+            margin-bottom: 1rem;
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        button[type="submit"] {
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 0.75rem;
+            background-color: #2575fc;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0.5rem 1rem rgba(37, 117, 252, 0.4);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+            button[type="submit"]:hover {
+                background-color: #1a54d1;
+                box-shadow: 0 0.6rem 1.2rem rgba(26, 84, 209, 0.5);
+            }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2><i class="fas fa-user-plus"></i> Register</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <div class="input-icon-group">
+                <label asp-for="Input.Email">Email</label>
+                <i class="fas fa-envelope"></i>
+                <input asp-for="Input.Email" autocomplete="username" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="input-icon-group">
+                <label asp-for="Input.Password">Password</label>
+                <i class="fas fa-lock"></i>
+                <input asp-for="Input.Password" autocomplete="new-password" placeholder="******" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="input-icon-group">
+                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <i class="fas fa-lock"></i>
+                <input asp-for="Input.ConfirmPassword" autocomplete="new-password" placeholder="******" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit"><i class="fas fa-user-check"></i> Register</button>
+        </form>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>

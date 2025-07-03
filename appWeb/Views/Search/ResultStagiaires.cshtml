@@ -1,0 +1,143 @@
+﻿@model IEnumerable<appWeb.Models.Stagiaire>
+
+@{
+    ViewData["Title"] = "Résultat de la recherche - Stagiaires";
+    Layout = "_Layout";
+}
+
+<style>
+    .page-container {
+        max-width: 960px;
+        margin: auto;
+        padding: 1rem;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #0d6efd;
+    }
+
+    .btn-sm i {
+        margin-right: 4px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    @@media (max-width: 576px) {
+        .btn-sm {
+            padding: 0.5rem 0.75rem;
+            font-size: 1rem;
+        }
+
+        table th, table td {
+            font-size: 0.9rem;
+        }
+    }
+
+    th i {
+        margin-right: 6px;
+        color: #0d6efd;
+    }
+
+    .fixed-pagination span {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+
+    .fixed-pagination div > a {
+        margin: 0 2px;
+    }
+</style>
+
+<div class="page-container">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            Aucun stagiaire ne correspond à votre recherche.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-primary">
+                    <tr>
+                        <th><i class="fas fa-user"></i> Nom</th>
+                        <th><i class="fas fa-user-tag"></i> Prénom</th>
+                        <th><i class="fas fa-envelope"></i> Email</th>
+                        <th><i class="fas fa-birthday-cake"></i> Date de naissance</th>
+                        <th class="text-center"><i class="fas fa-cogs"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Nom</td>
+                            <td>@item.Prenom</td>
+                            <td>@item.Email</td>
+                            <td>@item.DateNaissance.ToString("dd/MM/yyyy")</td>
+                            <td class="text-center">
+                                <a asp-controller="Stagiaire" asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm me-1" title="Détails">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                                <a asp-controller="Stagiaire" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm me-1" title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-controller="Stagiaire" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="Supprimer"
+                                   onclick="return confirm('Confirmer la suppression de ce stagiaire ?');">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="fixed-pagination">
+            <span>Page @ViewBag.CurrentPage sur @ViewBag.TotalPages</span>
+
+            <div>
+                @if (ViewBag.CurrentPage > 1)
+                {
+                    <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-chevron-left"></i> Précédent
+                    </a>
+                }
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <a asp-action="Index" asp-route-page="@i"
+                       class="btn btn-sm @(i == ViewBag.CurrentPage ? "btn-primary" : "btn-outline-secondary")">
+                        @i
+                    </a>
+                }
+
+                @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                {
+                    <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" class="btn btn-outline-primary btn-sm">
+                        Suivant <i class="fas fa-chevron-right"></i>
+                    </a>
+                }
+            </div>
+        </div>
+
+    }
+
+    <div class="text-center btn-retour">
+        <a asp-controller="Stagiaire" asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Retour à la liste des Stagiaires
+        </a>
+    </div>
+</div>

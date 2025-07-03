@@ -1,0 +1,28 @@
+﻿@model appWeb.Models.Stagiaire
+@{
+    ViewData["Title"] = "Détails du stagiaire";
+}
+
+<h2 class="mb-4">@ViewData["Title"]</h2>
+
+<div class="details-card">
+    <div class="details-title">Informations du stagiaire</div>
+    <dl class="row">
+        <dt class="col-sm-3 details-label">Nom</dt>
+        <dd class="col-sm-9">@Model.Nom</dd>
+
+        <dt class="col-sm-3 details-label">Prénom</dt>
+        <dd class="col-sm-9">@Model.Prenom</dd>
+
+        <dt class="col-sm-3 details-label">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3 details-label">Date de naissance</dt>
+        <dd class="col-sm-9">@Model.DateNaissance.ToString("dd/MM/yyyy")</dd>
+    </dl>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Modifier</a>
+    <a asp-action="Index" class="btn btn-secondary">Retour</a>
+</div>

@@ -1,0 +1,92 @@
+﻿@model appWeb.Models.Encadrant
+
+@{
+    ViewData["Title"] = "Créer un Encadrant";
+}
+
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #0d6efd;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+    }
+
+    label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+    }
+
+</style>
+<div class="form-container">
+    <h2>Créer un Encadrant</h2>
+
+    <form asp-action="Create" method="post" class="form-horizontal">
+        <div class="form-group">
+            <label asp-for="Nom" class="control-label"></label>
+            <input asp-for="Nom" class="form-control" />
+            <span asp-validation-for="Nom" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Prenom" class="control-label"></label>
+            <input asp-for="Prenom" class="form-control" />
+            <span asp-validation-for="Prenom" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Telephone" class="control-label"></label>
+            <input asp-for="Telephone" class="form-control" />
+            <span asp-validation-for="Telephone" class="text-danger"></span>
+        </div>
+
+        <!-- Dropdown formation -->
+        <div class="form-group">
+            <label for="FormationId">Formation</label>
+            <select asp-for="FormationId" class="form-control" asp-items="ViewBag.Formations">
+                <option value="">-- Sélectionner une formation --</option>
+            </select>
+            <span asp-validation-for="FormationId" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group text-center mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-plus-circle me-1"></i> Créer
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-times-circle me-1"></i> Annuler
+            </a>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

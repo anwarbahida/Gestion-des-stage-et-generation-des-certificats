@@ -1,0 +1,30 @@
+﻿@model appWeb.Models.Encadrant
+@{
+    ViewData["Title"] = "Détails de l'encadrant";
+}
+<h2 class="mb-4">@ViewData["Title"]</h2>
+
+<div class="details-card">
+    <div class="details-title">Informations de l'encadrant</div>
+    <dl class="row">
+        <dt class="col-sm-3 details-label">Nom</dt>
+        <dd class="col-sm-9">@Model.Nom</dd>
+
+        <dt class="col-sm-3 details-label">Prénom</dt>
+        <dd class="col-sm-9">@Model.Prenom</dd>
+
+        <dt class="col-sm-3 details-label">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3 details-label">Téléphone</dt>
+        <dd class="col-sm-9">@Model.Telephone</dd>
+
+        <dt class="col-sm-3 details-label">Formation</dt>
+        <dd class="col-sm-9">@Model.Formation?.Titre  </dd>
+    </dl>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Modifier</a>
+    <a asp-action="Index" class="btn btn-secondary">Retour</a>
+</div>

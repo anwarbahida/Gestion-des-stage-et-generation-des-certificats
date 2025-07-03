@@ -1,0 +1,83 @@
+﻿/* Structure principale */
+.delete-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #d9534f; /* rouge Bootstrap */
+}
+
+.delete-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #6c757d;
+}
+
+.delete-card {
+    background-color: #fff;
+    border-left: 6px solid #dc3545;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+    transition: transform 0.2s;
+}
+
+    .delete-card:hover {
+        transform: scale(1.01);
+    }
+
+.section-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #343a40;
+}
+
+/* Responsive et adaptatif */
+@media (max-width: 768px) {
+    .delete-card {
+        padding: 1.2rem;
+    }
+
+    .delete-title {
+        font-size: 1.6rem;
+    }
+
+    .delete-subtitle {
+        font-size: 1rem;
+    }
+
+    dt.col-sm-2, dd.col-sm-10 {
+        display: block;
+        width: 100%;
+    }
+
+    dt {
+        font-weight: bold;
+        margin-top: 0.5rem;
+    }
+
+    dd {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Boutons */
+form button.btn-danger,
+form a.btn-secondary {
+    padding: 0.6rem 1.4rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    margin-right: 1rem;
+}
+
+form a.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+}
+
+    form a.btn-secondary:hover {
+        background-color: #5a6268;
+        color: white;
+    }

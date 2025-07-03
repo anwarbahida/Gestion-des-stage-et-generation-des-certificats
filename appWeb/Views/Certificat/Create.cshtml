@@ -1,0 +1,80 @@
+﻿@model appWeb.Models.Certificat
+
+@{
+    ViewData["Title"] = "Créer un certificat";
+}
+
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #0d6efd;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+    }
+
+    label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+    }
+
+</style>
+
+<div class="form-container">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="Create">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-group">
+            <label for="StagiaireId" class="control-label">Stagiaire</label>
+            <select asp-for="StagiaireId" class="form-control" asp-items="ViewBag.StagiaireId"></select>
+            <span asp-validation-for="StagiaireId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="FormationId" class="control-label">Formation</label>
+            <select asp-for="FormationId" class="form-control" asp-items="ViewBag.FormationId"></select>
+            <span asp-validation-for="FormationId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DateGeneration" class="control-label">Date de génération</label>
+            <input asp-for="DateGeneration" type="date" class="form-control" />
+            <span asp-validation-for="DateGeneration" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-center mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-plus-circle me-1"></i> Créer
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-times-circle me-1"></i> Annuler
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
